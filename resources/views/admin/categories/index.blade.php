@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container">
-        <h1>Kategoriler</h1>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Yeni Kategori Ekle</a>
-        
+        <h1>Kategorileer</h1>
+        <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm float-end">Yeni Kategori Ekle</a>
+        <img src="{{ asset('images/Lokmalade.svg') }}" alt="Logo" class="w-32 h-auto mx-auto">
         <table class="table table-bordered">
             <thead>
                 <tr>

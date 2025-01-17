@@ -7,6 +7,8 @@
 /* Google Translate Element Ana Konteyner */
 #google_translate_element {
     display: inline-flex; /* Satır içi düzen */
+    position:fixed;
+    z-index: 1000px;
     align-items: center; /* Ortalamak için hizalama */
     gap: 10px; /* İçerik arasındaki boşluk */
     margin: 10px 0;
@@ -55,6 +57,6 @@
 .goog-te-gadget img, .goog-te-gadget span {
     display: none !important; /* Google Translate logosu ve metin gizlensin */
 }
-..goog-te-gadget-simple{
+.goog-te-gadget-simple{
     padding-top: 12px;
 }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Ürünler</h1>
-    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Yeni Ürün Ekle</a>
+    <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm float-end">Yeni Ürün Ekle</a>
 
     @if ($products->isEmpty())
         <p>Henüz ürün eklenmedi.</p>

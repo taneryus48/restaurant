@@ -4,18 +4,8 @@
 <div class="container mx-auto py-6">
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="text-center flex-grow">Menümüz</h1>
 
         <!-- Giriş Yapmış Kullanıcılar için -->
-        @auth
-        <div class="d-flex">
-            <a href="{{ route('dashboard') }}" class="btn btn-primary mx-2">Panele Dön</a>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-danger">Çıkış Yap</button>
-            </form>
-        </div>
-        @endauth
     </div>
 
     <!-- Kategori Butonları -->
@@ -49,7 +39,7 @@
             @endforeach
         @elseif(isset($filteredCategory))
             <!-- Kategoriye Göre Filtrelenmiş Ürünler -->
-            <h2 class="col-12 mb-4 text-center text-warning">{{ $filteredCategory->name }} Ürünleri</h2>
+            <h2 class="col-12 mb-4 text-center text-warning">{{ $filteredCategory->name }}</h2>
             @foreach ($filteredCategory->products as $product)
                 <div class="col-12 col-sm-6 col-md-4 mb-4">
                     <div class="card h-100 shadow-sm">

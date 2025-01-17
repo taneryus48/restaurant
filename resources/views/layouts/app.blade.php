@@ -1,56 +1,78 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <title>{{ config('app.name', 'Tatlı D') }}</title>
-        
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
+<div id="app">
+<div class="header">
+<img src="{{ asset('images/Lokmalade.svg') }}" alt="Logo" class="w-48 sm:w-64 md:w-80 lg:w-96 h-auto mx-auto">
+</div>
+    <!-- Google Translate Element (Sadece oturum kapalıysa) -->
+    @guest
+    <div id="google_translate_element"></div>
+    @endguest
 
-        <!-- Google Translate -->
-        <script type="text/javascript">
-            function googleTranslateElementInit() {
-                new google.translate.TranslateElement(
-                    { 
-                        pageLanguage: 'tr', 
-                        includedLanguages: 'tr,en,fr,de,es,it', 
-                        layout: google.translate.TranslateElement.InlineLayout.SIMPLE 
-                    },
-                    'google_translate_element'
-                );
-            }
-        </script>
-        <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-        <!-- CSS for Google Translate -->
-    </head>
-    <body class="font-sans antialiased">
-        
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900 d-flex">
-            @auth
-                <!-- Sidebar yalnızca giriş yapmış kullanıcılar için -->
-                @include('layouts.sidebar')
-            @endauth
-
-            <!-- Main Content -->
-            <div class="flex-1 p-4">
-                <!-- Google Translate Widget -->
-                <div id="google_translate_element"></div>
-
-                <!-- Sayfa İçeriği -->
-                @yield('content')
-            </div>
+    <!-- Hamburger (Yalnızca oturum açmış kullanıcılar için) -->
+    @auth
+    <div class="d-lg-none position-fixed top-0 start-0 m-3" style="z-index:1000;">
+        <div class="hamburger" onclick="toggleSidebar()">
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
-    </body>
+    </div>
+    @endauth
+
+    <!-- Sidebar: yalnızca oturum açmış kullanıcılar için -->
+    @auth
+        @include('layouts.sidebar')
+    @endauth
+
+    <!-- Ana İçerik -->
+    <div id="main-content">
+        @yield('content')
+    </div>
+</div>
+
+<!-- Google Translate Scriptleri -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'tr',            // Varsayılan Dil
+            includedLanguages: 'tr,en,de,fr,it,es', // Açılır menüde yer alacak diller
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+</script>
+<script
+    type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+
+<!-- Bootstrap JS -->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js">
+</script>
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const hamburger = document.querySelector('.hamburger');
+        if (sidebar && hamburger) {
+            sidebar.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+    }
+</script>
+</body>
 </html>
