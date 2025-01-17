@@ -5,43 +5,48 @@
 @tailwind components;
 @tailwind utilities;
 /* Google Translate Element Ana Konteyner */
+/* Google Translate Element Ana Konteyner */
 #google_translate_element {
     display: inline-flex; /* Satır içi düzen */
-    position:fixed;
-    z-index: 1000px;
+    position: fixed;
+    z-index: 1000;
+    bottom: 20px; /* Alt boşluk */
+    right: 20px; /* Sağ boşluk */
     align-items: center; /* Ortalamak için hizalama */
     gap: 10px; /* İçerik arasındaki boşluk */
-    margin: 10px 0;
-    padding: 8px 12px;
-    background-color: #f3f4f6; /* Hafif gri bir arka plan */
-    border: 2px solid #ddd; /* Kenar çizgisi */
-    border-radius: 5px; /* Köşeleri yuvarla */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    padding: 8px 16px;
+    background-color: #ffffff; /* Beyaz arka plan */
+    border: 2px solid #007bff; /* Kenar çizgisi */
+    border-radius: 50px; /* Yuvarlak köşeler */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    cursor: pointer; /* Tıklanabilir işaretçi */
+    transition: all 0.3s ease; /* Geçiş animasyonu */
 }
 
 /* Dil Seçimi Kutusu */
 .goog-te-combo {
     background: #ffffff; /* Beyaz arka plan */
-    border: 1px solid #ccc; /* Kenar çizgisi */
-    border-radius: 5px; /* Yuvarlak köşeler */
+    border: 1px solid #007bff; /* Mavi kenar */
+    border-radius: 25px; /* Yuvarlak köşeler */
     font-size: 14px; /* Yazı boyutu */
-    padding: 6px 12px; /* İç boşluk */
+    padding: 8px 16px; /* İç boşluk */
     color: #333; /* Yazı rengi */
     cursor: pointer; /* İşaretçi göstergesi */
     outline: none; /* Kenar odak efekti yok */
     transition: all 0.3s ease; /* Geçiş animasyonu */
+    font-weight: 500;
 }
 
 /* Hover Efekti */
 .goog-te-combo:hover {
-    border-color: #007bff; /* Mavi kenar */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Hover gölgesi */
+    border-color: #0056b3; /* Daha koyu mavi kenar */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Hover gölgesi */
 }
 
 /* Odağa Gelindiğinde */
 .goog-te-combo:focus {
     border-color: #0056b3; /* Daha koyu mavi kenar */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Daha belirgin gölge */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Daha belirgin gölge */
 }
 
 /* Başlık Metni (Dil Seçimi Yazısı) */
@@ -57,6 +62,23 @@
 .goog-te-gadget img, .goog-te-gadget span {
     display: none !important; /* Google Translate logosu ve metin gizlensin */
 }
-.goog-te-gadget-simple{
+
+.goog-te-gadget-simple {
     padding-top: 12px;
+}
+
+/* Mobil İçin */
+@media (max-width: 768px) {
+    #google_translate_element {
+        font-size: 14px;
+        padding: 6px 10px;
+        margin: 5px 0;
+        bottom: 10px; /* Mobilde daha yakın */
+        right: 10px;  /* Mobilde daha yakın */
+    }
+
+    .goog-te-combo {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
 }

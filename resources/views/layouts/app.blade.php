@@ -50,9 +50,15 @@
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
             pageLanguage: 'tr',            // Varsayılan Dil
-            includedLanguages: 'tr,en,de,fr,it,es', // Açılır menüde yer alacak diller
+            includedLanguages: 'tr,en,ru,ar,fr', // Açılır menüde yer alacak diller
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE
         }, 'google_translate_element');
+
+        // Tüm butonu tıklanabilir hale getirme
+        document.getElementById('google_translate_element').addEventListener('click', function() {
+            // Hedef dil seçici açılacak
+            document.getElementById(':0.targetLanguage').click(); // Çizgiye tıklanmış gibi davranıyoruz
+        });
     }
 </script>
 <script
