@@ -9,6 +9,29 @@
         {{ session('success') }}
     </div>
 @endif
+@extends('layouts.sidebar')
+
+@section('content')
+<div class="container mx-auto py-6">
+    <h1 class="text-2xl font-bold mb-4">Ürünler</h1>
+
+    <div class="mb-4">
+        <!-- Panele Dön Butonu -->
+        <a href="{{ route('dashboard') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+            Panele Dön
+        </a>
+        <!-- Menü Butonu -->
+        <a href="{{ route('menu.index') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            Menü
+        </a>
+    </div>
+
+    <!-- Ürün Listesi -->
+    <div class="bg-white shadow rounded-lg p-6">
+        <!-- Ürün tablosu buraya gelecek -->
+    </div>
+</div>
+@endsection
 
     <table class="table-auto border-collapse border border-gray-300 w-full text-left">
     <thead>

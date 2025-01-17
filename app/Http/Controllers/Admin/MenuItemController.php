@@ -84,3 +84,18 @@ class MenuItemController extends Controller
     }
 
 }
+namespace App\Http\Controllers;
+
+use App\Models\Category;
+
+class MenuController extends Contrfoller
+{
+    public function index()
+    {
+        $categories = Category::with(['products' => function ($query) {
+            $query->where('status', 'yayında'); // Sadece yayında olan ürünleri getir
+        }])->get();
+
+        return view('menu', compact('categories'));
+    }
+}

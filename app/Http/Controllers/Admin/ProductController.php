@@ -12,23 +12,17 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        // Ürün sorgusu oluştur
         $query = Product::with('category');
 
-        // Arama filtresi
         if ($request->has('search')) {
             $query->where('name', 'like', '%' . $request->input('search') . '%');
         }
 
-        // Kategori filtresi
         if ($request->has('category_id') && $request->category_id != '') {
             $query->where('category_id', $request->input('category_id'));
         }
 
-        // Ürünleri getir (sayfalama ile)
         $products = $query->paginate(10);
-
-        // Kategorileri al
         $categories = Category::all();
 
         return view('admin.products.index', compact('products', 'categories'));
@@ -43,12 +37,17 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price'       => 'required|numeric',
+            'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
-            'image'       => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:2048',
+            'is_active' => 'nullable|boolean',
+            'is_popular' => 'sometimes|boolean',
         ]);
+
+        $validated['is_active'] = $request->has('is_active');
+        $validated['is_popular'] = $request->has('is_popular');
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('products', 'public');
@@ -68,23 +67,27 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price'       => 'required|numeric',
-            'category_id' => 'required|exists:categories,id',
-            'image'       => 'nullable|image|max:2048',
+            'price' => 'required|numeric',
+            'category_id' => 'nullable|integer',
+            'status' => 'required|in:draft,published',
+            'image' => 'nullable|image|max:2048',
+            'is_popular' => 'sometimes|boolean',
         ]);
+
+        $validated['is_popular'] = $request->has('is_popular');
 
         if ($request->hasFile('image')) {
             if ($product->image) {
-                Storage::delete('public/' . $product->image);
+                Storage::delete($product->image);
             }
             $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
         $product->update($validated);
 
-        return redirect()->route('products.index')->with('success', 'Ürün başarıyla güncellendi.');
+        return redirect()->route('products.edit', $product)->with('success', 'Ürün başarıyla güncellendi!');
     }
 
     public function destroy(Product $product)
@@ -106,5 +109,13 @@ class ProductController extends Controller
         }
 
         return redirect()->route('products.edit', $product)->with('success', 'Ürün görseli başarıyla silindi.');
+    }
+
+    public function dashboard()
+    {
+        $products = Product::with('category')->get();
+        $categories = Category::all();
+
+        return view('admin.dashboard', compact('products', 'categories'));
     }
 }

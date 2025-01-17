@@ -1,17 +1,57 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
+@section('content')
+<div class="container mt-5">
+    <h1 class="mb-4">Ürün Yönetimi Dashboard</h1>
+
+    <!-- Ürünleri Listeleme -->
+    <div class="card mb-4">
+        <div class="card-header">
+            Ürünler
+            <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm float-end">Yeni Ürün Ekle</a>
+        </div>
+        <div class="card-body">
+            @if($products->isEmpty())
+                <p class="text-center">Henüz ürün eklenmedi.</p>
+            @else
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ürün Adı</th>
+                            <th>Kategori</th>
+                            <th>Fiyat</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($products as $product)
+                            <tr>
+                                <td>{{ $product->id }}</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->category->name ?? 'Kategori Yok' }}</td>
+                                <td>{{ $product->price }} ₺</td>
+                                <td>
+                                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Düzenle</a>
+                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
-</x-app-layout>
+
+    <!-- Kategori Ekleme -->
+    <div class="card">
+        <div class="card-header">
+            <a href="{{ route('categories.create') }}" class="btn btn-success">Kategori Ekle</a>
+        </div>
+    </div>
+</div>
+@endsection

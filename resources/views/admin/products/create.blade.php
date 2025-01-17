@@ -1,44 +1,41 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <h1 class="mb-4">{{ isset($product) ? 'Ürün Güncelle' : 'Yeni Ürün Ekle' }}</h1>
-    <form action="{{ isset($product) ? route('products.update', $product->id) : route('products.store') }}" method="POST" enctype="multipart/form-data">
+<div class="container">
+    <h1>Yeni Ürün Ekle</h1>
+
+    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @if(isset($product))
-            @method('PUT')
-        @endif
-        <div class="mb-3">
-            <label for="name" class="form-label">Ürün Adı</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $product->name ?? '') }}" required>
+        <div class="form-group mb-3">
+            <label for="name">Ürün Adı</label>
+            <input type="text" name="name" class="form-control" required>
         </div>
-        <div class="mb-3">
-            <label for="category_id" class="form-label">Kategori</label>
-            <select class="form-select" id="category_id" name="category_id" required>
-                <option value="">Kategori Seçin</option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ (isset($product) && $product->category_id == $category->id) ? 'selected' : '' }}>
-                        {{ $category->name }}
-                    </option>
+
+        <div class="form-group mb-3">
+            <label for="description">Açıklama</label>
+            <textarea name="description" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="price">Fiyat</label>
+            <input type="number" name="price" class="form-control" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="category_id">Kategori</label>
+            <select name="category_id" class="form-control">
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
         </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">Açıklama</label>
-            <textarea class="form-control" id="description" name="description">{{ old('description', $product->description ?? '') }}</textarea>
+
+        <div class="form-group mb-3">
+            <label for="image">Resim</label>
+            <input type="file" name="image" class="form-control">
         </div>
-        <div class="mb-3">
-            <label for="price" class="form-label">Fiyat</label>
-            <input type="number" class="form-control" id="price" name="price" value="{{ old('price', $product->price ?? '') }}" required>
-        </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">Ürün Resmi</label>
-            <input type="file" class="form-control" id="image" name="image">
-            @if(isset($product) && $product->image)
-                <img src="{{ asset('storage/' . $product->image) }}" alt="Mevcut Resim" width="100" class="mt-2">
-            @endif
-        </div>
-        <button type="submit" class="btn btn-success">{{ isset($product) ? 'Güncelle' : 'Ekle' }}</button>
+
+        <button type="submit" class="btn btn-success">Kaydet</button>
     </form>
 </div>
 @endsection

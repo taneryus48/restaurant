@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,11 +12,18 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'category_id',
         'image',
+        'category_id',
+        'status',
+        'is_popular',
     ];
+
+    /**
+     * Kategori ile ilişki.
+     */
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 }
+?>
